@@ -1,6 +1,8 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.pyc
+*.pyo
 *$py.class
 
 # C extensions
@@ -27,6 +29,7 @@ share/python-wheels/
 
 # Virtual environments
 .env
+.venv/
 .venv
 env/
 venv/
@@ -41,12 +44,19 @@ htmlcov/
 .tox/
 .nox/
 
-# Database transient files
+# Database files & transient journals
+*.db
+*.sqlite
+*.sqlite3
 *.db-journal
 *.db-wal
 *.db-shm
 test_thr.db
 *.sqlite-journal
+
+# Temporary artifacts
+tmp/
+*.tmp
 
 # Uploads
 storage/uploads/*
@@ -54,6 +64,7 @@ storage/uploads/*
 
 # Teamwork and agent scratch directories
 .agents/
+.agents/teamwork/
 
 # OS and IDE files
 .DS_Store
