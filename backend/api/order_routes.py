@@ -13,7 +13,7 @@ from typing import Dict, Any, Optional
 
 from flask import Blueprint, request, jsonify, g
 
-from app.services.fulfillment_service import (
+from backend.services.fulfillment_service import (
     create_order_atomic,
     cancel_order,
     get_order,
@@ -22,9 +22,9 @@ from app.services.fulfillment_service import (
     OrderStateTransitionException,
     PaymentFailedException
 )
-from app.services.inventory_service import InsufficientStockException
+from backend.services.inventory_service import InsufficientStockException
 
-from app.auth.rbac import (
+from backend.auth.rbac import (
     require_auth,
     require_role,
     ROLE_ADMIN,

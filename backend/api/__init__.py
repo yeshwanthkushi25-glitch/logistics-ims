@@ -7,12 +7,12 @@ Exports all REST blueprints and the centralized blueprint registration helper.
 from typing import List, Tuple, Any
 from flask import Flask
 
-from app.api.auth_routes import auth_bp, admin_bp
-from app.api.inventory_routes import inventory_bp, warehouses_bp
-from app.api.order_routes import order_bp
-from app.api.shipment_routes import shipment_bp, telemetry_bp
-from app.api.routing_routes import routing_bp, routes_alias_bp
-from app.api.analytics_routes import analytics_bp, cache_bp
+from backend.api.auth_routes import auth_bp, admin_bp
+from backend.api.inventory_routes import inventory_bp, warehouses_bp
+from backend.api.order_routes import order_bp
+from backend.api.shipment_routes import shipment_bp, telemetry_bp
+from backend.api.routing_routes import routing_bp, routes_alias_bp
+from backend.api.analytics_routes import analytics_bp, cache_bp
 
 
 ALL_BLUEPRINTS: List[Tuple[Any, str]] = [

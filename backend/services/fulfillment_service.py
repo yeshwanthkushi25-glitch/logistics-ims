@@ -15,10 +15,10 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Union
 
-from app.db.connection import get_db_connection, transaction_scope
-from app.db.cache import get_cache_manager
-from app.db.nosql import DocumentStore
-from app.services.inventory_service import (
+from backend.db.connection import get_db_connection, transaction_scope
+from backend.db.cache import get_cache_manager
+from backend.db.nosql import DocumentStore
+from backend.services.inventory_service import (
     allocate_inventory,
     release_inventory,
     InsufficientStockException,

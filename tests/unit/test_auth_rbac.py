@@ -19,7 +19,7 @@ import tempfile
 import pytest
 from flask import Flask, jsonify, g
 
-from app.auth.security import (
+from backend.auth.security import (
     hash_password,
     verify_password,
     generate_token,
@@ -34,7 +34,7 @@ from app.auth.security import (
     TokenExpiredError,
     DEFAULT_PBKDF2_ITERATIONS,
 )
-from app.auth.rbac import (
+from backend.auth.rbac import (
     ROLE_ADMIN,
     ROLE_WAREHOUSE_MANAGER,
     ROLE_DISPATCHER,
@@ -52,8 +52,8 @@ from app.auth.rbac import (
     get_current_user,
     get_current_role,
 )
-from app.db.init_db import init_database
-from app.db.connection import get_db_connection, set_default_db_path, close_all_connections
+from backend.db.init_db import init_database
+from backend.db.connection import get_db_connection, set_default_db_path, close_all_connections
 
 
 # =============================================================================

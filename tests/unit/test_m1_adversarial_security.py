@@ -12,10 +12,10 @@ import sqlite3
 import tempfile
 import pytest
 
-from app.db.connection import get_db_connection, set_default_db_path, close_all_connections
-from app.db.nosql import DocumentStore
-from app.db.storage import LocalStorageClient
-from app.db.init_db import get_schema_sql
+from backend.db.connection import get_db_connection, set_default_db_path, close_all_connections
+from backend.db.nosql import DocumentStore
+from backend.db.storage import LocalStorageClient
+from backend.db.init_db import get_schema_sql
 
 
 @pytest.fixture

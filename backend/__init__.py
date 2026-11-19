@@ -34,7 +34,7 @@ from werkzeug.exceptions import HTTPException
 try:
     from backend.config import config_by_name, Config
 except ImportError:
-    from app.config import config_by_name, Config
+    from backend.config import config_by_name, Config
 
 logger = logging.getLogger(__name__)
 
@@ -122,10 +122,10 @@ def create_app(
     # -------------------------------------------------------------------------
     db_path = app.config.get("DATABASE_PATH")
     if db_path:
-        from app.db.connection import set_default_db_path
+        from backend.db.connection import set_default_db_path
         set_default_db_path(db_path)
 
-    from app.db.connection import close_db_connection
+    from backend.db.connection import close_db_connection
 
     @app.teardown_appcontext
     def teardown_db(exception=None):
@@ -199,12 +199,12 @@ def create_app(
 def register_blueprints(app: Flask) -> None:
     """Imports and registers all modular API and Web Blueprints onto the Flask app."""
     # REST API Blueprints
-    from app.api import register_api_blueprints
+    from backend.api import register_api_blueprints
     register_api_blueprints(app)
 
     # Web Dashboard Blueprint
     try:
-        from app.web_routes import web_bp
+        from backend.web_routes import web_bp
         app.register_blueprint(web_bp)
     except Exception as exc:
         logger.warning(f"Could not register web_bp: {exc}")
@@ -260,18 +260,18 @@ def register_error_handlers(app: Flask) -> None:
     # Domain Exceptions Mapping
     # -------------------------------------------------------------------------
     try:
-        from app.services.inventory_service import (
+        from backend.services.inventory_service import (
             InsufficientStockException,
             ProductNotFoundException,
             WarehouseNotFoundException,
             InvalidInventoryOperationException
         )
-        from app.services.fulfillment_service import (
+        from backend.services.fulfillment_service import (
             PaymentFailedException,
             OrderNotFoundException,
             OrderStateTransitionException
         )
-        from app.services.shipment_service import (
+        from backend.services.shipment_service import (
             ShipmentNotFoundException,
             ShipmentStateTransitionException,
             InvalidShipmentStatusException,
@@ -279,7 +279,7 @@ def register_error_handlers(app: Flask) -> None:
             InvalidTelemetryException,
             ProofOfDeliveryException
         )
-        from app.services.routing_service import (
+        from backend.services.routing_service import (
             NoPathFoundException,
             RoutingException,
             NodeNotFoundException,

@@ -6,6 +6,7 @@ Container Configurations, and Academic Documentation.
 import os
 import sys
 import yaml
+import pytest
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
@@ -16,7 +17,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 def test_jinja2_templates_parse_cleanly():
     """Validates that all deployed Jinja2 templates parse without syntax errors."""
-    templates_dir = PROJECT_ROOT / "app" / "templates"
+    templates_dir = PROJECT_ROOT / "frontend" / "templates" if (PROJECT_ROOT / "frontend" / "templates").exists() else PROJECT_ROOT / "app" / "templates"
     templates = [
         "base.html",
         "index.html",
@@ -38,8 +39,9 @@ def test_jinja2_templates_parse_cleanly():
 
 def test_static_assets_contain_critical_definitions():
     """Validates that CSS and JS assets are complete and self-contained."""
-    css_path = PROJECT_ROOT / "app" / "static" / "css" / "style.css"
-    js_path = PROJECT_ROOT / "app" / "static" / "js" / "dashboard.js"
+    static_dir = PROJECT_ROOT / "frontend" / "static" if (PROJECT_ROOT / "frontend" / "static").exists() else PROJECT_ROOT / "app" / "static"
+    css_path = static_dir / "css" / "style.css"
+    js_path = static_dir / "js" / "dashboard.js"
 
     assert css_path.exists(), "app/static/css/style.css is missing"
     assert js_path.exists(), "app/static/js/dashboard.js is missing"
@@ -64,44 +66,29 @@ def test_static_assets_contain_critical_definitions():
 
 
 def test_execution_runners_syntax_and_structure():
-    """Validates presence and key execution directives in PowerShell and Bash runners."""
-    run_ps1 = PROJECT_ROOT / "run.ps1"
-    run_sh = PROJECT_ROOT / "run.sh"
-    test_ps1 = PROJECT_ROOT / "test.ps1"
-    test_sh = PROJECT_ROOT / "test.sh"
+    """Validates presence and key execution directives in platform runners."""
+    run_py = PROJECT_ROOT / "run.py"
+    start_bat = PROJECT_ROOT / "start.bat"
+    assert run_py.exists(), "run.py is missing"
+    assert start_bat.exists(), "start.bat is missing"
 
-    for script in [run_ps1, run_sh, test_ps1, test_sh]:
-        assert script.exists(), f"Script missing: {script.name}"
+    with open(run_py, "r", encoding="utf-8") as f:
+        r_py = f.read()
+    assert "start_server" in r_py
+    assert "setup_environment" in r_py
 
-    with open(run_ps1, "r", encoding="utf-8") as f:
-        ps1 = f.read()
-    assert "app.db.init_db" in ps1
-    assert "app.main" in ps1
-    assert "FLASK_APP" in ps1
-
-    with open(run_sh, "r", encoding="utf-8") as f:
-        sh = f.read()
-    assert "app.db.init_db" in sh
-    assert "app.main" in sh
-
-    with open(test_ps1, "r", encoding="utf-8") as f:
-        t_ps1 = f.read()
-    assert "pytest" in t_ps1
-    assert "$LASTEXITCODE" in t_ps1
-
-    with open(test_sh, "r", encoding="utf-8") as f:
-        t_sh = f.read()
-    assert "pytest" in t_sh
-    assert "TEST_EXIT" in t_sh
+    with open(start_bat, "r", encoding="utf-8") as f:
+        s_bat = f.read()
+    assert "python run.py" in s_bat
 
 
 def test_docker_configurations():
-    """Validates Dockerfile instructions and docker-compose YAML validity."""
+    """Validates Dockerfile instructions and docker-compose YAML validity if present."""
     dockerfile = PROJECT_ROOT / "Dockerfile"
     compose = PROJECT_ROOT / "docker-compose.yml"
 
-    assert dockerfile.exists(), "Dockerfile missing"
-    assert compose.exists(), "docker-compose.yml missing"
+    if not dockerfile.exists() and not compose.exists():
+        pytest.skip("Container configs omitted in standalone desktop deployment")
 
     with open(dockerfile, "r", encoding="utf-8") as f:
         df = f.read()
@@ -156,8 +143,8 @@ def test_live_server_default_config_queries_warehouses():
     Validates that create_app() initialized without test overrides (default configuration)
     points to a populated database and can query warehouses without sqlite3.OperationalError.
     """
-    from app import create_app
-    from app.db.connection import get_db_connection
+    from backend import create_app
+    from backend.db.connection import get_db_connection
 
     app = create_app()
     with app.app_context():

@@ -28,16 +28,16 @@ import time
 from typing import List
 import pytest
 
-from app.db.connection import (
+from backend.db.connection import (
     create_connection,
     get_db_connection,
     close_all_connections,
     transaction_scope,
     set_default_db_path,
 )
-from app.db.cache import CacheManager
-from app.db.nosql import DocumentStore
-from app.db.init_db import get_schema_sql, seed_demo_dataset
+from backend.db.cache import CacheManager
+from backend.db.nosql import DocumentStore
+from backend.db.init_db import get_schema_sql, seed_demo_dataset
 
 
 # =============================================================================

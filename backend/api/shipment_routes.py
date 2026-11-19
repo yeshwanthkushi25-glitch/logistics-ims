@@ -18,8 +18,8 @@ from typing import Dict, Any, Optional, List
 
 from flask import Blueprint, request, jsonify, g, make_response
 
-from app.db.connection import get_db_connection, transaction_scope
-from app.services.shipment_service import (
+from backend.db.connection import get_db_connection, transaction_scope
+from backend.services.shipment_service import (
     create_shipment,
     update_shipment_status,
     record_shipment_milestone,
@@ -37,7 +37,7 @@ from app.services.shipment_service import (
     _invalidate_shipment_caches
 )
 
-from app.auth.rbac import (
+from backend.auth.rbac import (
     require_auth,
     require_role,
     ROLE_ADMIN,

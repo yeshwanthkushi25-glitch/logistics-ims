@@ -17,7 +17,7 @@ from typing import List, Set, Dict, Any, Optional, Callable, Union
 from flask import request, jsonify, g, has_request_context
 
 try:
-    from app.auth.security import (
+    from backend.auth.security import (
         verify_token,
         decode_token,
         AuthenticationError,

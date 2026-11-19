@@ -45,14 +45,14 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from app.db.connection import get_db_connection, transaction_scope, set_default_db_path, close_all_connections
-from app.db.init_db import init_database
-from app.db.cache import get_cache_manager
-from app.db.nosql import get_doc_store, DocumentStore
-from app.db.storage import get_storage_client
+from backend.db.connection import get_db_connection, transaction_scope, set_default_db_path, close_all_connections
+from backend.db.init_db import init_database
+from backend.db.cache import get_cache_manager
+from backend.db.nosql import get_doc_store, DocumentStore
+from backend.db.storage import get_storage_client
 
-import app.services.shipment_service as shipment_service
-import app.services.routing_service as routing_service
+import backend.services.shipment_service as shipment_service
+import backend.services.routing_service as routing_service
 
 
 @pytest.fixture(scope="module")

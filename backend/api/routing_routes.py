@@ -15,8 +15,8 @@ from typing import Dict, Any, Optional, List
 
 from flask import Blueprint, request, jsonify, g
 
-from app.db.connection import get_db_connection
-from app.services.routing_service import (
+from backend.db.connection import get_db_connection
+from backend.services.routing_service import (
     calculate_optimal_route,
     get_k_alternative_routes,
     detect_network_bottlenecks,
@@ -29,7 +29,7 @@ from app.services.routing_service import (
     VehicleConstraintViolationException
 )
 
-from app.auth.rbac import (
+from backend.auth.rbac import (
     require_auth,
     require_role,
     ROLE_ADMIN,

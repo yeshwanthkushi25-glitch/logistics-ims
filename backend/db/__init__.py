@@ -5,7 +5,7 @@ Exposes primary database connection, transaction manager, NoSQL document store,
 high-throughput cache manager, cloud storage client, and initialization utilities.
 """
 
-from app.db.connection import (
+from backend.db.connection import (
     get_db_connection,
     create_connection,
     close_db_connection,
@@ -14,9 +14,9 @@ from app.db.connection import (
     set_default_db_path,
     get_default_db_path,
 )
-from app.db.nosql import DocumentStore, get_doc_store
-from app.db.cache import CacheManager, get_cache_manager
-from app.db.storage import (
+from backend.db.nosql import DocumentStore, get_doc_store
+from backend.db.cache import CacheManager, get_cache_manager
+from backend.db.storage import (
     BaseStorageClient,
     LocalStorageClient,
     S3StorageClient,
@@ -24,7 +24,7 @@ from app.db.storage import (
     get_storage_client,
     set_storage_client,
 )
-from app.db.init_db import init_database, seed_demo_dataset
+from backend.db.init_db import init_database, seed_demo_dataset
 
 __all__ = [
     "get_db_connection",

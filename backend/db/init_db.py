@@ -509,7 +509,7 @@ def init_database(
     Returns:
         Configured sqlite3.Connection instance.
     """
-    from app.db.connection import (
+    from backend.db.connection import (
         get_db_connection,
         set_default_db_path,
         get_default_db_path,

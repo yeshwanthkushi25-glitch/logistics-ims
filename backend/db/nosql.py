@@ -18,7 +18,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 # Optional import of centralized connection manager; falls back gracefully
 try:
-    from app.db.connection import get_db_connection
+    from backend.db.connection import get_db_connection
 except ImportError:
     get_db_connection = None
 

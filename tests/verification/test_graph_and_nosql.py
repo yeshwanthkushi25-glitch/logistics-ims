@@ -57,7 +57,7 @@ def test_dijkstra_shortest_distance_vs_least_cost(client, dispatcher_headers):
 def test_nosql_polymorphic_telemetry_queries(client, driver_headers, admin_headers, app):
     """Verify NoSQL DocumentStore ingests polymorphic telemetry documents and supports JSON path filtering."""
     try:
-        from app.db.nosql import get_doc_store
+        from backend.db.nosql import get_doc_store
     except ImportError:
         pytest.skip("app.db.nosql not yet implemented")
 

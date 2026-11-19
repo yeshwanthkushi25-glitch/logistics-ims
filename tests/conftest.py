@@ -15,13 +15,13 @@ if PROJECT_ROOT not in sys.path:
 
 # Attempt to import core application modules; if not yet implemented, allow graceful collection
 try:
-    from app import create_app
-    from app.db.connection import get_db_connection, transaction_scope
-    from app.db.init_db import init_database
-    from app.db.cache import get_cache_manager
-    from app.db.nosql import get_doc_store
-    from app.db.storage import get_storage_client
-    from app.auth.security import generate_token, hash_password
+    from backend import create_app
+    from backend.db.connection import get_db_connection, transaction_scope
+    from backend.db.init_db import init_database
+    from backend.db.cache import get_cache_manager
+    from backend.db.nosql import get_doc_store
+    from backend.db.storage import get_storage_client
+    from backend.auth.security import generate_token, hash_password
     APP_AVAILABLE = True
 except ImportError as err:
     APP_AVAILABLE = False

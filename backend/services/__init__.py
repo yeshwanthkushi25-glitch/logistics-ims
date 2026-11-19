@@ -8,7 +8,7 @@ Provides high-level business logic and transactional workflows:
 - RoutingService: Network graph routing (Dijkstra, A* Haversine), K-alternatives, capacity bottleneck detection, dynamic outage rerouting, and SQL recursive CTE.
 """
 
-from app.services.inventory_service import (
+from backend.services.inventory_service import (
     InventoryException,
     InsufficientStockException,
     ProductNotFoundException,
@@ -22,7 +22,7 @@ from app.services.inventory_service import (
     adjust_inventory,
 )
 
-from app.services.fulfillment_service import (
+from backend.services.fulfillment_service import (
     FulfillmentException,
     PaymentFailedException,
     OrderNotFoundException,
@@ -33,7 +33,7 @@ from app.services.fulfillment_service import (
     list_orders,
 )
 
-from app.services.shipment_service import (
+from backend.services.shipment_service import (
     ShipmentException,
     ShipmentNotFoundException,
     InvalidShipmentStatusException,
@@ -55,7 +55,7 @@ from app.services.shipment_service import (
     assign_driver,
 )
 
-from app.services.routing_service import (
+from backend.services.routing_service import (
     RoutingException,
     NodeNotFoundException,
     NoPathFoundException,

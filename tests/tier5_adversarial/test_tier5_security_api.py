@@ -46,7 +46,7 @@ import logging
 import pytest
 import jwt
 
-from app.auth.security import (
+from backend.auth.security import (
     generate_token,
     decode_token,
     verify_token,
@@ -56,7 +56,7 @@ from app.auth.security import (
     InvalidTokenError,
     TokenExpiredError
 )
-from app.auth.rbac import (
+from backend.auth.rbac import (
     ROLE_ADMIN,
     ROLE_WAREHOUSE_MANAGER,
     ROLE_DISPATCHER,

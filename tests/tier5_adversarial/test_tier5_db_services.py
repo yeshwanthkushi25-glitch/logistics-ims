@@ -60,19 +60,19 @@ PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
-from app.db.connection import (
+from backend.db.connection import (
     create_connection,
     get_db_connection,
     close_all_connections,
     set_default_db_path,
     transaction_scope,
 )
-from app.db.init_db import init_database
-from app.db.cache import CacheManager, get_cache_manager
-from app.db.nosql import DocumentStore, get_doc_store
-from app.db.storage import LocalStorageClient
+from backend.db.init_db import init_database
+from backend.db.cache import CacheManager, get_cache_manager
+from backend.db.nosql import DocumentStore, get_doc_store
+from backend.db.storage import LocalStorageClient
 
-from app.services.inventory_service import (
+from backend.services.inventory_service import (
     calculate_reorder_point,
     get_inventory_levels,
     allocate_inventory,
@@ -83,7 +83,7 @@ from app.services.inventory_service import (
     ProductNotFoundException,
     InvalidInventoryOperationException,
 )
-from app.services.fulfillment_service import (
+from backend.services.fulfillment_service import (
     create_order_atomic,
     get_order,
     cancel_order,
@@ -91,7 +91,7 @@ from app.services.fulfillment_service import (
     OrderNotFoundException,
     OrderStateTransitionException,
 )
-from app.services.shipment_service import (
+from backend.services.shipment_service import (
     create_shipment,
     update_shipment_status,
     record_shipment_milestone,
@@ -104,7 +104,7 @@ from app.services.shipment_service import (
     InvalidMilestoneException,
     InvalidTelemetryException,
 )
-from app.services.routing_service import (
+from backend.services.routing_service import (
     calculate_optimal_route,
     simulate_edge_outage_and_reroute,
     seeded_network_cte_routing,
@@ -138,7 +138,7 @@ def isolated_db() -> Generator[str, None, None]:
     cache.reset_stats()
 
     # Reset DocumentStore singleton
-    import app.db.nosql as nosql_mod
+    import backend.db.nosql as nosql_mod
     nosql_mod._GLOBAL_DOC_STORE = None
 
     yield path

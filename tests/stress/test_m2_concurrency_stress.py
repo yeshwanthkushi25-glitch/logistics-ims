@@ -38,17 +38,17 @@ PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
-from app.db.connection import (
+from backend.db.connection import (
     create_connection,
     get_db_connection,
     close_all_connections,
     transaction_scope,
     set_default_db_path,
 )
-from app.db.init_db import get_schema_sql, seed_demo_dataset
-from app.db.cache import get_cache_manager
-from app.db.nosql import DocumentStore
-from app.services.inventory_service import (
+from backend.db.init_db import get_schema_sql, seed_demo_dataset
+from backend.db.cache import get_cache_manager
+from backend.db.nosql import DocumentStore
+from backend.services.inventory_service import (
     allocate_inventory,
     release_inventory,
     restock_inventory,
@@ -58,7 +58,7 @@ from app.services.inventory_service import (
     ProductNotFoundException,
     InvalidInventoryOperationException,
 )
-from app.services.fulfillment_service import (
+from backend.services.fulfillment_service import (
     create_order_atomic,
     cancel_order,
     get_order,

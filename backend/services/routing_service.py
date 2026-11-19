@@ -25,7 +25,7 @@ from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
 import networkx as nx
 
-from app.db.connection import get_db_connection
+from backend.db.connection import get_db_connection
 
 logger = logging.getLogger(__name__)
 

@@ -187,7 +187,7 @@ def generate_token(
     if permissions is None:
         # Fallback to role permissions from RBAC matrix
         try:
-            from app.auth.rbac import ROLE_PERMISSIONS_MATRIX
+            from backend.auth.rbac import ROLE_PERMISSIONS_MATRIX
         except ImportError:
             try:
                 from proposed_rbac import ROLE_PERMISSIONS_MATRIX
@@ -282,7 +282,7 @@ def get_user_by_id(user_id: str, db_conn: Optional[sqlite3.Connection] = None) -
     """
     Fetches user profile and assigned role permissions from SQLite database.
     """
-    from app.db.connection import get_db_connection
+    from backend.db.connection import get_db_connection
     conn = db_conn or get_db_connection()
     cur = conn.cursor()
 
@@ -323,7 +323,7 @@ def get_user_by_username(username: str, db_conn: Optional[sqlite3.Connection] = 
     """
     Fetches user record by username from SQLite database.
     """
-    from app.db.connection import get_db_connection
+    from backend.db.connection import get_db_connection
     conn = db_conn or get_db_connection()
     cur = conn.cursor()
 
@@ -376,7 +376,7 @@ def authenticate_user(
     Returns:
         User profile dictionary (with password_hash removed) on success, or None on failure.
     """
-    from app.db.connection import get_db_connection
+    from backend.db.connection import get_db_connection
     conn = db_conn or get_db_connection()
     cur = conn.cursor()
 
@@ -447,7 +447,7 @@ def register_user(
     Raises:
         ValueError: On validation failure or duplicate record.
     """
-    from app.db.connection import get_db_connection, transaction_scope
+    from backend.db.connection import get_db_connection, transaction_scope
     conn = db_conn or get_db_connection()
     cur = conn.cursor()
 

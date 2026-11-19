@@ -13,8 +13,8 @@ from typing import Dict, Any, Optional
 
 from flask import Blueprint, request, jsonify, g
 
-from app.db.connection import get_db_connection
-from app.services.inventory_service import (
+from backend.db.connection import get_db_connection
+from backend.services.inventory_service import (
     get_inventory_levels,
     restock_inventory,
     adjust_inventory,
@@ -24,7 +24,7 @@ from app.services.inventory_service import (
     InvalidInventoryOperationException
 )
 
-from app.auth.rbac import (
+from backend.auth.rbac import (
     require_auth,
     require_role,
     ROLE_ADMIN,

@@ -12,11 +12,11 @@ from typing import Dict, Any, Optional
 
 from flask import Blueprint, request, jsonify, g
 
-from app.db.connection import get_db_connection
-from app.db.cache import get_cache_manager
-from app.db.nosql import get_doc_store
+from backend.db.connection import get_db_connection
+from backend.db.cache import get_cache_manager
+from backend.db.nosql import get_doc_store
 
-from app.auth.rbac import (
+from backend.auth.rbac import (
     require_auth,
     require_role,
     ROLE_ADMIN,

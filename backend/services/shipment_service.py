@@ -23,10 +23,10 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
-from app.db.connection import get_db_connection, transaction_scope
-from app.db.cache import get_cache_manager
-from app.db.nosql import DocumentStore, get_doc_store
-from app.db.storage import get_storage_client
+from backend.db.connection import get_db_connection, transaction_scope
+from backend.db.cache import get_cache_manager
+from backend.db.nosql import DocumentStore, get_doc_store
+from backend.db.storage import get_storage_client
 
 logger = logging.getLogger(__name__)
 

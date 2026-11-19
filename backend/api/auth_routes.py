@@ -16,11 +16,11 @@ from typing import Dict, Any, Optional
 from flask import Blueprint, request, jsonify, g
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from app.db.connection import get_db_connection, transaction_scope
-from app.db.nosql import get_doc_store
+from backend.db.connection import get_db_connection, transaction_scope
+from backend.db.nosql import get_doc_store
 
-from app.auth.security import generate_token, verify_password, hash_password
-from app.auth.rbac import require_auth, require_role, ROLE_ADMIN
+from backend.auth.security import generate_token, verify_password, hash_password
+from backend.auth.rbac import require_auth, require_role, ROLE_ADMIN
 
 logger = logging.getLogger(__name__)
 

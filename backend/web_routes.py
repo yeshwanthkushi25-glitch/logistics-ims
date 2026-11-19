@@ -12,11 +12,11 @@ import sqlite3
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from typing import Optional, Dict, Any
 
-from app.db.connection import get_db_connection
-from app.db.cache import get_cache_manager
-from app.services.inventory_service import get_inventory_levels
-from app.services.shipment_service import get_tracking_details, ShipmentNotFoundException
-from app.services.routing_service import detect_network_bottlenecks
+from backend.db.connection import get_db_connection
+from backend.db.cache import get_cache_manager
+from backend.services.inventory_service import get_inventory_levels
+from backend.services.shipment_service import get_tracking_details, ShipmentNotFoundException
+from backend.services.routing_service import detect_network_bottlenecks
 
 web_bp = Blueprint("web", __name__)
 

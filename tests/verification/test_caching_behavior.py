@@ -15,7 +15,7 @@ import pytest
 def test_cache_lifecycle_hit_miss_invalidation(client, customer_headers, driver_headers, app):
     """Executes the full 6-phase Cache-Aside lifecycle probe on shipment tracking."""
     try:
-        from app.db.cache import get_cache_manager
+        from backend.db.cache import get_cache_manager
     except ImportError:
         pytest.skip("app.db.cache not yet implemented")
 

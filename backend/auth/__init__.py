@@ -11,7 +11,7 @@ Exposes core security and authorization interfaces:
 """
 
 try:
-    from app.auth.security import (
+    from backend.auth.security import (
         hash_password,
         verify_password,
         generate_token,
@@ -48,7 +48,7 @@ except ImportError:
     )
 
 try:
-    from app.auth.rbac import (
+    from backend.auth.rbac import (
         ROLE_ADMIN,
         ROLE_WAREHOUSE_MANAGER,
         ROLE_DISPATCHER,

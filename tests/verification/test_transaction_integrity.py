@@ -105,7 +105,7 @@ def test_atomic_rollback_on_payment_failure(client, customer_headers, db_conn):
 def test_mid_flight_crash_zero_orphan_records(app, db_conn):
     """Verify that an unhandled Python exception inside the transaction scope triggers clean rollback."""
     try:
-        from app.db.connection import transaction_scope
+        from backend.db.connection import transaction_scope
     except ImportError:
         pytest.skip("app.db.connection not yet implemented")
 
