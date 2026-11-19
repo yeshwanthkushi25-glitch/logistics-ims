@@ -1,0 +1,73 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.env
+.venv/
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Database files & transient journals
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+test_thr.db
+*.sqlite-journal
+
+# Temporary artifacts
+tmp/
+*.tmp
+
+# Uploads
+storage/uploads/*
+!storage/uploads/.gitkeep
+
+# Teamwork and agent scratch directories
+.agents/
+.agents/teamwork/
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

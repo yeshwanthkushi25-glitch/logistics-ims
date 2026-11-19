@@ -1,6 +1,6 @@
 @echo off
 title Logistics IMS — Multi-Model Database Platform
-cd /d "%~dp0"
+cd /d "%~dp0Logistics_Management_System"
 echo ======================================================================
 echo    Launching Logistics IMS Platform (Python SQLite WAL + REST)
 echo ======================================================================

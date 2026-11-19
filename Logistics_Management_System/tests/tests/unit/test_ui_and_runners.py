@@ -1,0 +1,178 @@
+"""
+Automated Verification Test Suite for Milestone 4 UI Templates, Execution Runners,
+Container Configurations, and Academic Documentation.
+"""
+
+import os
+import sys
+import yaml
+import pytest
+from pathlib import Path
+from jinja2 import Environment, FileSystemLoader
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+
+def test_jinja2_templates_parse_cleanly():
+    """Validates that all deployed Jinja2 templates parse without syntax errors."""
+    templates_dir = PROJECT_ROOT / "frontend" / "templates" if (PROJECT_ROOT / "frontend" / "templates").exists() else PROJECT_ROOT / "app" / "templates"
+    templates = [
+        "base.html",
+        "index.html",
+        "tracking.html",
+        "inventory.html",
+        "network.html"
+    ]
+    env = Environment(loader=FileSystemLoader(str(templates_dir)))
+
+    for tmpl_name in templates:
+        tmpl_path = templates_dir / tmpl_name
+        assert tmpl_path.exists(), f"Template missing: {tmpl_name}"
+        # Parse template
+        with open(tmpl_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        parsed = env.parse(content)
+        assert parsed is not None, f"Failed to parse {tmpl_name}"
+
+
+def test_static_assets_contain_critical_definitions():
+    """Validates that CSS and JS assets are complete and self-contained."""
+    static_dir = PROJECT_ROOT / "frontend" / "static" if (PROJECT_ROOT / "frontend" / "static").exists() else PROJECT_ROOT / "app" / "static"
+    css_path = static_dir / "css" / "style.css"
+    js_path = static_dir / "js" / "dashboard.js"
+
+    assert css_path.exists(), "app/static/css/style.css is missing"
+    assert js_path.exists(), "app/static/js/dashboard.js is missing"
+
+    with open(css_path, "r", encoding="utf-8") as f:
+        css = f.read()
+    assert ":root" in css
+    assert ".kpi-grid" in css
+    assert ".stepper-track" in css
+    assert ".data-table" in css
+    assert ".topology-svg-container" in css
+
+    with open(js_path, "r", encoding="utf-8") as f:
+        js = f.read()
+    assert "window.IMS" in js
+    assert "refreshDashboardKPIs" in js
+    assert "lookupShipment" in js
+    assert "filterInventoryTable" in js
+    assert "submitRestock" in js
+    assert "computeRoute" in js
+    assert "loadBottlenecks" in js
+
+
+def test_execution_runners_syntax_and_structure():
+    """Validates presence and key execution directives in platform runners."""
+    run_py = PROJECT_ROOT / "run.py"
+    start_bat = PROJECT_ROOT / "start.bat"
+    assert run_py.exists(), "run.py is missing"
+    assert start_bat.exists(), "start.bat is missing"
+
+    with open(run_py, "r", encoding="utf-8") as f:
+        r_py = f.read()
+    assert "start_server" in r_py
+    assert "setup_environment" in r_py
+
+    with open(start_bat, "r", encoding="utf-8") as f:
+        s_bat = f.read()
+    assert "python run.py" in s_bat
+
+
+def test_docker_configurations():
+    """Validates Dockerfile instructions and docker-compose YAML validity if present."""
+    dockerfile = PROJECT_ROOT / "Dockerfile"
+    compose = PROJECT_ROOT / "docker-compose.yml"
+
+    if not dockerfile.exists() and not compose.exists():
+        pytest.skip("Container configs omitted in standalone desktop deployment")
+
+    with open(dockerfile, "r", encoding="utf-8") as f:
+        df = f.read()
+    assert "FROM python:" in df
+    assert "COPY requirements.txt" in df
+    assert "HEALTHCHECK" in df
+    assert "EXPOSE 5000" in df
+
+    with open(compose, "r", encoding="utf-8") as f:
+        compose_data = yaml.safe_load(f)
+    assert "services" in compose_data
+    assert "logistics-ims" in compose_data["services"]
+    service = compose_data["services"]["logistics-ims"]
+    assert "ports" in service
+    assert "environment" in service
+    assert "healthcheck" in service
+
+
+def test_readme_academic_coverage():
+    """Validates comprehensive academic sections in README.md."""
+    readme = PROJECT_ROOT / "README.md"
+    assert readme.exists(), "README.md missing"
+
+    with open(readme, "r", encoding="utf-8") as f:
+        md = f.read()
+
+    required_keywords = [
+        "Relational Storage Engine",
+        "NoSQL Document Store",
+        "Graph Database & Network Routing Engine",
+        "High-Throughput Caching Layer",
+        "ACID Transaction Manager",
+        "Cryptographic Security & 5-Role RBAC",
+        "Quick Start & Execution Guide",
+        "run.ps1",
+        "run.sh",
+        "docker-compose",
+        "REST API Reference",
+        "Automated Verification & Test Suite",
+        "Dijkstra",
+        "Haversine",
+        "Betweenness Centrality",
+        "Cache-Aside"
+    ]
+
+    for kw in required_keywords:
+        assert kw in md, f"README.md missing key section or keyword: '{kw}'"
+
+
+def test_live_server_default_config_queries_warehouses():
+    """
+    Validates that create_app() initialized without test overrides (default configuration)
+    points to a populated database and can query warehouses without sqlite3.OperationalError.
+    """
+    from backend import create_app
+    from backend.db.connection import get_db_connection
+
+    app = create_app()
+    with app.app_context():
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT count(*) FROM warehouses")
+        count = cur.fetchone()[0]
+        assert count > 0, "Default database must contain seeded warehouses"
+
+        client = app.test_client()
+        resp = client.get("/api/v1/inventory/warehouses")
+        assert resp.status_code == 200, f"Expected 200, got {resp.status_code}: {resp.get_data(as_text=True)}"
+        data = resp.get_json()
+        assert "warehouses" in data
+        assert len(data["warehouses"]) > 0
+
+
+if __name__ == "__main__":
+    test_jinja2_templates_parse_cleanly()
+    print("PASS: test_jinja2_templates_parse_cleanly")
+    test_static_assets_contain_critical_definitions()
+    print("PASS: test_static_assets_contain_critical_definitions")
+    test_execution_runners_syntax_and_structure()
+    print("PASS: test_execution_runners_syntax_and_structure")
+    test_docker_configurations()
+    print("PASS: test_docker_configurations")
+    test_readme_academic_coverage()
+    print("PASS: test_readme_academic_coverage")
+    test_live_server_default_config_queries_warehouses()
+    print("PASS: test_live_server_default_config_queries_warehouses")
+    print("ALL VERIFICATION CHECKS PASSED!")
