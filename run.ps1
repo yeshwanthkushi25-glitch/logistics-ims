@@ -85,7 +85,7 @@ Write-Host "Press Ctrl+C to terminate server." -ForegroundColor DarkYellow
 Write-Host "-----------------------------------------------------------------" -ForegroundColor DarkGray
 
 try {
-    & $PythonCmd -m app.main
+    & $PythonCmd run.py
 } catch {
     Write-Host "`nServer terminated." -ForegroundColor DarkYellow
 }

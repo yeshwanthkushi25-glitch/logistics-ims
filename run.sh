@@ -67,4 +67,4 @@ echo ""
 echo "Press Ctrl+C to terminate server."
 echo "-----------------------------------------------------------------"
 
-exec $PY_CMD -m app.main
+exec $PY_CMD run.py

@@ -83,10 +83,16 @@ def create_app(
         config = None
 
     base_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(base_dir)
+    frontend_static = os.path.join(project_root, "frontend", "static")
+    frontend_templates = os.path.join(project_root, "frontend", "templates")
+    static_folder = frontend_static if os.path.isdir(frontend_static) else os.path.join(base_dir, "static")
+    template_folder = frontend_templates if os.path.isdir(frontend_templates) else os.path.join(base_dir, "templates")
+
     app = Flask(
         "logistics_ims",
-        static_folder=os.path.join(base_dir, "static"),
-        template_folder=os.path.join(base_dir, "templates")
+        static_folder=static_folder,
+        template_folder=template_folder
     )
 
     # -------------------------------------------------------------------------
